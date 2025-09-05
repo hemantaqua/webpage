@@ -1,0 +1,33 @@
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Environment variables - VERY IMPORTANT
+.env
+.env.*
+!.env.example
+
+# --- Python / Backend ---
+
+# Virtual Environment
+/backend/venv/
+
+# Python cache
+/backend/__pycache__/
+*.pyc
+
+# --- Node.js / Frontend ---
+
+# Dependency folder
+/frontend/node_modules/
+
+# Build folder
+/frontend/.next/
+
+# Next.js local environment variables
+/frontend/.env.local
