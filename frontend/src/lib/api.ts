@@ -33,10 +33,10 @@ export async function getProductBySlug(slug: string) {
     return fetchAPI(`/products/${slug}`);
 }
 
-export async function submitInquiry(data: { name: string; email: string; message: string; }) {
-    return fetchAPI('/inquiry', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-    });
+export async function submitInquiry(data: { name: string; email: string; phone: string; subject?: string; message: string }) {
+  return fetchAPI('/inquiry', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
 }

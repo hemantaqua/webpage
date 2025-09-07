@@ -39,17 +39,17 @@ export function Navbar() {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Link href="#about" className="text-sm font-medium text-slate-700 hover:text-slate-900">
+          <Link href="/about" className="text-sm font-medium text-slate-700 hover:text-slate-900">
             About Us
           </Link>
-          <Link href="#contact" className="text-sm font-medium text-slate-700 hover:text-slate-900">
+          <Link href="/contact" className="text-sm font-medium text-slate-700 hover:text-slate-900">
             Contact
           </Link>
         </div>
 
         <div className="ml-4 flex items-center gap-3">
           <Button asChild className="bg-blue-800 text-white hover:bg-blue-700">
-            <Link href="#contact">Get a Quote</Link>
+            <Link href="/contact">Get a Quote</Link>
           </Button>
         </div>
       </nav>
