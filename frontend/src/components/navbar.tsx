@@ -28,13 +28,16 @@ export function Navbar() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">
               <DropdownMenuItem asChild>
-                <Link href="#irrigation">Irrigation Systems</Link>
+                <Link href="/products#irrigation-systems">Irrigation Systems</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="#water-distribution">Water Distribution</Link>
+                <Link href="/products#water-distribution">Water Distribution</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="#solar">Solar Components</Link>
+                <Link href="/products#solar-solutions">Solar Components</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/products#water-level-controller">Water Level Controllers</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

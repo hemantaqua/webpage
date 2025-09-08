@@ -4,6 +4,7 @@ export interface Product {
     slug: string;
     description: string;
     images: string[];
+    videos: string[];
     category_slug: string;
 }
 
