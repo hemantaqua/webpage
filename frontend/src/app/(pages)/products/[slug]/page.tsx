@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, Phone, ShoppingCart, Image as ImageIcon, Play, ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { useEffect, useState, use } from "react"
+import { useEffect, useState, use, useRef } from "react"
 import { getProductBySlug, getCategoryBySlug } from "@/lib/api"
 
 interface Product {
@@ -42,6 +42,8 @@ export default function ProductPage({ params }: ProductPageProps) {
   const [category, setCategory] = useState<Category | null>(null)
   const [loading, setLoading] = useState(true)
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -61,6 +63,25 @@ export default function ProductPage({ params }: ProductPageProps) {
 
     fetchProduct()
   }, [slug])
+
+  // Handle video play/pause events
+  const handleVideoPlay = () => {
+    setIsVideoPlaying(true)
+  }
+
+  const handleVideoPause = () => {
+    setIsVideoPlaying(false)
+  }
+
+  const handleVideoClick = () => {
+    if (videoRef.current) {
+      if (videoRef.current.paused) {
+        videoRef.current.play()
+      } else {
+        videoRef.current.pause()
+      }
+    }
+  }
 
   if (loading) {
     return (
@@ -153,22 +174,31 @@ export default function ProductPage({ params }: ProductPageProps) {
                               ) : (
                                 <div className="relative h-full w-full bg-slate-900">
                                   <video
+                                    ref={videoRef}
                                     src={slideshowItems[currentSlide].src}
                                     className="h-full w-full object-cover"
                                     controls
                                     preload="metadata"
+                                    onPlay={handleVideoPlay}
+                                    onPause={handleVideoPause}
                                   />
-                                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                    <div className="rounded-full bg-white/20 p-3 backdrop-blur-sm">
-                                      <Play className="h-6 w-6 text-white" />
+                                  {/* Play button overlay - only show when video is paused */}
+                                  {!isVideoPlaying && (
+                                    <div 
+                                      className="absolute inset-0 flex items-center justify-center cursor-pointer"
+                                      onClick={handleVideoClick}
+                                    >
+                                      <div className="rounded-full bg-white/20 p-3 backdrop-blur-sm hover:bg-white/30 transition-colors">
+                                        <Play className="h-6 w-6 text-white" />
+                                      </div>
                                     </div>
-                                  </div>
+                                  )}
                                 </div>
                               )}
 
-                              {/* Media Indicators Overlay */}
+                              {/* Media Indicators Overlay - positioned above video controls */}
                               {slideshowItems.length > 1 && (
-                                <div className="absolute bottom-3 inset-x-0 flex justify-center gap-2">
+                                <div className="absolute bottom-12 inset-x-0 flex justify-center gap-2">
                                   {slideshowItems.map((item, index) => (
                                     <button
                                       key={item.key}

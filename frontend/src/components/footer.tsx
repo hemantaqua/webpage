@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 export function SiteFooter() {
   return (
     <footer className="bg-slate-900 text-slate-300">
@@ -14,24 +16,24 @@ export function SiteFooter() {
           <div className="text-sm font-semibold text-white">Quick Links</div>
           <ul className="mt-3 space-y-2 text-sm">
             <li>
-              <a href="/" className="hover:underline">
+              <Link href="/" className="hover:underline">
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#irrigation" className="hover:underline">
+              <Link href="/products" className="hover:underline">
                 Products
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#about" className="hover:underline">
+              <Link href="/about" className="hover:underline">
                 About
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#contact" className="hover:underline">
+              <Link href="/contact" className="hover:underline">
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -40,24 +42,29 @@ export function SiteFooter() {
           <div className="text-sm font-semibold text-white">Our Solutions</div>
           <ul className="mt-3 space-y-2 text-sm">
             <li>
-              <a href="#irrigation" className="hover:underline">
-                Irrigation
-              </a>
+              <Link href="/products#irrigation-systems" className="hover:underline">
+                Irrigation Systems
+              </Link>
             </li>
             <li>
-              <a href="#water-distribution" className="hover:underline">
+              <Link href="/products#water-distribution" className="hover:underline">
                 Water Distribution
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#solar" className="hover:underline">
-                Solar
-              </a>
+              <Link href="/products#solar-solutions" className="hover:underline">
+                Solar Components
+              </Link>
+            </li>
+            <li>
+              <Link href="/products#water-level-controller" className="hover:underline">
+                Water Level Controllers
+              </Link>
             </li>
           </ul>
         </div>
 
-        <div id="contact">
+        <div>
           <div className="text-sm font-semibold text-white">Contact Us</div>
           <ul className="mt-3 space-y-2 text-sm">
             <li>123 Greenfield Park, Pune, IN</li>
