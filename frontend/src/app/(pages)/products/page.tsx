@@ -8,6 +8,7 @@ import { Droplets, Zap, Wrench, Gauge, ArrowRight, Phone, Image as ImageIcon } f
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { getCategories, getProducts } from "@/lib/api"
+import { Badge } from "@/components/ui/badge"
 
 interface Category {
   id: number
@@ -27,6 +28,7 @@ interface Product {
   videos: string[]
   sku?: string
   featured: boolean
+  available_variants: string[]
 }
 
 const categoryIcons = {

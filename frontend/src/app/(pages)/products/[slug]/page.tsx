@@ -21,6 +21,7 @@ interface Product {
   videos: string[]
   sku?: string
   featured: boolean
+  available_variants: string[]
 }
 
 interface Category {
@@ -267,6 +268,16 @@ export default function ProductPage({ params }: ProductPageProps) {
                     <div className="space-y-2">
                       <h3 className="text-lg font-semibold text-slate-900">Product Code</h3>
                       <p className="text-slate-600 font-mono">{product.sku}</p>
+                    </div>
+                  )}
+
+                  {/* Available Variants */}
+                  {product.available_variants && product.available_variants.length > 0 && (
+                    <div className="space-y-2">
+                      <h3 className="text-lg font-semibold text-slate-900">Available in:</h3>
+                      <p className="text-slate-600">
+                        {product.available_variants.join(' , ')}
+                      </p>
                     </div>
                   )}
 

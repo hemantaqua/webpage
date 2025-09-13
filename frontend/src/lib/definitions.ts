@@ -6,6 +6,7 @@ export interface Product {
     images: string[];
     videos: string[];
     category_slug: string;
+    available_variants: string[];
 }
 
 export interface Category {

@@ -8,6 +8,7 @@ class Product(BaseModel):
     description: str
     images: List[str]
     category_slug: str
+    available_variants: List[str] = []
 
 class Category(BaseModel):
     id: int
