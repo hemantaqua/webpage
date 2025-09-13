@@ -4,7 +4,7 @@ import React from 'react';
 
 export function VideoWithQuote() {
   return (
-    <section className="relative h-96 flex items-center justify-center overflow-hidden">
+    <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
       {/* Video Background */}
       <video
         src="/home_page_video.mp4"
@@ -16,13 +16,16 @@ export function VideoWithQuote() {
       />
 
       {/* Overlay */}
-      <div className="absolute top-0 left-0 w-full h-full bg-black/60 z-10"></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-black/40 z-10"></div>
 
       {/* Quote Text */}
-      <div className="relative z-20 text-center px-4">
-        <h2 className="text-white text-3xl md:text-4xl font-semibold leading-tight text-balance">
-          &ldquo;Excellence in every detail. Service that exceeds expectations.&rdquo;
+      <div className="relative z-20 text-center px-4 max-w-4xl">
+        <h2 className="text-white text-3xl md:text-5xl font-semibold leading-tight text-balance">
+          Welcome to the home of Hemant Aqua Solutions.
         </h2>
+        <p className="text-white text-lg md:text-xl mt-6 leading-relaxed">
+          Your Partner in Irrigation Solutions, Sustainable Water and Energy Management
+        </p>
       </div>
     </section>
   );

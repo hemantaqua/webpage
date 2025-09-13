@@ -5,9 +5,22 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { ChevronDown } from "lucide-react"
 import { useState } from "react"
+import { useRouter, usePathname } from "next/navigation"
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
+  const router = useRouter()
+  const pathname = usePathname()
+
+const go = (slug: string) => {
+  setOpen(false)
+  if (pathname === "/products") {
+    history.replaceState(null, "", `#${slug}`)
+    window.dispatchEvent(new HashChangeEvent("hashchange"))
+  } else {
+    router.push(`/products?section=${slug}`, { scroll: false })
+  }
+}
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/60 backdrop-blur supports-[backdrop-filter]:bg-white/60">
@@ -27,17 +40,17 @@ export function Navbar() {
               <ChevronDown className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">
-              <DropdownMenuItem asChild>
-                <Link href="/products#irrigation-systems">Irrigation Systems</Link>
+              <DropdownMenuItem onSelect={() => go("irrigation-systems")}>
+                Irrigation Systems
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/products#water-distribution">Water Distribution</Link>
+              <DropdownMenuItem onSelect={() => go("water-distribution")}>
+                Water Distribution
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/products#solar-solutions">Solar Components</Link>
+              <DropdownMenuItem onSelect={() => go("solar-solutions")}>
+                Solar Components
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/products#water-level-controller">Water Level Controllers</Link>
+              <DropdownMenuItem onSelect={() => go("water-level-controller")}>
+                Water Level Controllers
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

@@ -30,28 +30,28 @@ type Slide = {
 
 const slides: Slide[] = [
   {
-    key: "irrigation",
-    title: "Advanced Irrigation Systems",
-    subtitle: "Maximizing Yields and Conserving Water with Precision Technology.",
-    cta: "Explore Irrigation",
-    href: "#irrigation",
+    key: "drip-irrigation-kit",
+    title: "Drip Irrigation Kit 50m",
+    subtitle: "Complete irrigation solution for efficient water distribution and optimal crop growth.",
+    cta: "View Product",
+    href: "/products/drip-irrigation-kit-50m",
     imageUrl: irrigationImage,
   },
   {
-    key: "water",
-    title: "Reliable Water Distribution",
-    subtitle: "Durable, High-Performance Piping Solutions for Every Need.",
-    cta: "View Solutions",
-    href: "#water-distribution",
-    imageUrl: waterImage,
+    key: "pv-junction-box",
+    title: "PV Junction Box IP68",
+    subtitle: "Weather-resistant electrical connection box for reliable solar panel installations.",
+    cta: "View Product",
+    href: "/products/pv-junction-box-ip68",
+    imageUrl: solarImage,
   },
   {
-    key: "solar",
-    title: "Sustainable Solar Power",
-    subtitle: "Powering the Future with Robust and Efficient Solar Components.",
-    cta: "Discover Solar",
-    href: "#solar",
-    imageUrl: solarImage,
+    key: "water-level-controller",
+    title: "Auto Water Level Controller Sensors",
+    subtitle: "Smart automation system for precise water level monitoring and control.",
+    cta: "View Product",
+    href: "/products/auto-water-level-controller-sensors",
+    imageUrl: waterImage,
   },
 ]
 
@@ -69,7 +69,10 @@ export function HeroCarousel() {
   }, [api])
 
   return (
-    <section aria-label="Featured solutions" className="relative">
+    <section 
+      aria-label="Featured products" 
+      className="relative"
+    >
       <Carousel
         setApi={setApi}
         className="w-full"

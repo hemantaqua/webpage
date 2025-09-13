@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import irrigationImage from "@/assets/images/irrigation_product_category_face_homepage.png"
 import waterImage from "@/assets/images/water_supply_category_face_homepage.png"
 import solarImage from "@/assets/images/solar_product_category_face_homepage.png"
+import waterLevelImage from "@/assets/images/Water_Level_Controller_homepage.jpg"
 
 const categories = [
   {
@@ -20,10 +21,16 @@ const categories = [
     img: waterImage,
   },
   {
-    slug: "solar-power",
+    slug: "solar-solutions",
     title: "Solar Components",
     desc: "Harness the power of the sun with our reliable solar modules, inverters, and mounting structures. We provide the essential components for robust and efficient clean energy projects of any scale.",
     img: solarImage,
+  },
+  {
+    slug: "water-level-controller",
+    title: "Water Level Controllers",
+    desc: "Automate and protect your water systems with intelligent controllers and sensors that prevent dry runs, overflow, and wastage—built for reliability in residential and agricultural use.",
+    img: waterLevelImage,
   },
 ]
 
@@ -58,7 +65,7 @@ export function ProductCategories() {
                 <p className="mt-3 text-base leading-relaxed text-slate-600">{category.desc}</p>
                 <div className="mt-6">
                   <Button asChild size="lg">
-                    <Link href={`/${category.slug}`}>View Products</Link>
+                  <Link href={{ pathname: "/products", query: { section: category.slug } }} scroll={false}>View Products</Link>
                   </Button>
                 </div>
               </div>

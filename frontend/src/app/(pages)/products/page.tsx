@@ -50,11 +50,19 @@ export default function ProductsPage() {
         ])
         
         if (categoriesData) {
-          setCategories(categoriesData)
-          setActiveSection(categoriesData[0]?.slug || "")
+          // Define the desired order for categories
+          const categoryOrder = ['irrigation-systems', 'water-distribution', 'solar-solutions', 'water-level-controller']
+          
+          // Sort categories according to the desired order
+          const sortedCategories = categoryOrder
+            .map(slug => categoriesData.find((cat: Category) => cat.slug === slug))
+            .filter(Boolean) as Category[]
+          
+          setCategories(sortedCategories)
+          setActiveSection(sortedCategories[0]?.slug || "")
           
           // Fetch products for each category
-          const productsPromises = categoriesData.map(async (category: Category) => {
+          const productsPromises = sortedCategories.map(async (category: Category) => {
             const products = await getProducts(category.slug)
             return { categorySlug: category.slug, products: products || [] }
           })
@@ -78,6 +86,51 @@ export default function ProductsPage() {
     fetchData()
   }, [])
 
+  // Scroll helpers for anchor navigation (accounts for sticky navbar ~64px)
+  const scrollWithOffset = (id: string) => {
+    const el = document.getElementById(id)
+    if (!el) return false
+    const y = el.getBoundingClientRect().top + window.scrollY - 64
+    window.scrollTo({ top: y, behavior: "smooth" })
+    return true
+  }
+  
+  const scrollToTargetReliably = (id: string) => {
+    const start = performance.now()
+    const attempt = () => {
+      if (scrollWithOffset(id)) {
+        history.replaceState(null, "", `#${id}`)
+        return
+      }
+      if (performance.now() - start < 3000) requestAnimationFrame(attempt)
+    }
+    requestAnimationFrame(attempt)
+  }
+  
+  // Simple wrapper used by sidebar buttons
+  const scrollToSection = (sectionId: string) => {
+    scrollToTargetReliably(sectionId)
+  }
+  
+  useEffect(() => {
+    if (!categories.length) return
+    const hash = decodeURIComponent(window.location.hash.replace("#", ""))
+    const params = new URLSearchParams(window.location.search)
+    const section = hash || params.get("section") || ""
+    if (section) requestAnimationFrame(() => scrollToTargetReliably(section))
+  }, [categories])
+
+  // Handle hash changes (e.g., clicking navbar while on page)
+  useEffect(() => {
+    const onHash = () => {
+      const id = decodeURIComponent(window.location.hash.replace("#", ""))
+      if (id) scrollWithOffset(id)
+    }
+    window.addEventListener("hashchange", onHash)
+    return () => window.removeEventListener("hashchange", onHash)
+  }, [])
+
+  // Track section in view for sidebar highlighting
   useEffect(() => {
     const handleScroll = () => {
       const sections = categories.map((cat) => document.getElementById(cat.slug))
@@ -97,13 +150,6 @@ export default function ProductsPage() {
       return () => window.removeEventListener("scroll", handleScroll)
     }
   }, [categories])
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" })
-    }
-  }
 
   const getCoverImage = (product: Product): string | null => {
     return product.images && product.images.length > 0 ? product.images[0] : null
@@ -127,8 +173,8 @@ export default function ProductsPage() {
   return (
     <>
       <Navbar />
-      
-      {/* Left Sidebar Navigation */}
+
+      {/* Fixed Left Sidebar */}
       <aside className="fixed left-0 top-16 z-10 h-[calc(100vh-4rem)] w-64 border-r border-slate-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/95 overflow-y-auto">
         <div className="p-6">
           <h2 className="text-lg font-semibold text-slate-900 mb-4">Product Categories</h2>
@@ -154,7 +200,7 @@ export default function ProductsPage() {
         </div>
       </aside>
 
-      {/* Main Content with proper left margin */}
+      {/* Main Content shifted to the right of the fixed sidebar */}
       <main className="ml-64">
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-blue-50 to-green-50 px-6 py-16 md:px-12">
@@ -176,7 +222,7 @@ export default function ProductsPage() {
             <section
               key={category.id}
               id={category.slug}
-              className={`px-6 py-16 md:px-12 ${categoryIndex % 2 === 0 ? "bg-white" : "bg-slate-50"}`}
+              className={`px-6 py-16 md:px-12 ${categoryIndex % 2 === 0 ? "bg-white" : "bg-slate-50"} scroll-mt-24`}
             >
               <div className="mx-auto max-w-6xl">
                 {/* Category Header */}
@@ -229,7 +275,7 @@ export default function ProductsPage() {
           )
         })}
 
-        {/* CTA Section */}
+        {/* CTA Section - modern rounded rectangle, does not touch sidebar */}
         <section className="px-6 py-16 md:px-12 relative z-20">
           <div className="mx-auto max-w-6xl">
             <div className="bg-blue-800 rounded-3xl px-8 py-16 text-white">
@@ -263,7 +309,8 @@ export default function ProductsPage() {
           </div>
         </section>
       </main>
-      
+
+      {/* Ensure footer sits above sidebar visually if overlapping */}
       <div className="relative z-20">
         <SiteFooter />
       </div>
